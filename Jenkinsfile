@@ -17,6 +17,11 @@ pipeline {
         sh './jenkins/scripts/test.sh'
       }
     }
+    stage('Policy Evaluation Dev'){
+      steps {
+        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'simple-node-js-react-npm-app', iqScanPatterns: [[scanPattern: '**/*']], iqStage: 'build', jobCredentialsId: ''
+      }
+    }
     stage('Deliver') {
       steps {
         sh './jenkins/scripts/deliver.sh'
